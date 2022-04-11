@@ -6,7 +6,7 @@
 class SegmentSwap {
 
     /*@  public normal_behaviour
-     @  requires 1 < a.length && a.length < 10 && 0 <= startLow && endHigh < a.length &&
+     @  requires 1 < a.length && 0 <= startLow && endHigh < a.length &&
      @           startLow <= endLow && startHigh <= endHigh && endLow < startHigh &&
      @           endLow-startLow == endHigh-startHigh;
      @  ensures (\forall int offset; 0 <= offset && offset <= endLow-startLow; 
@@ -37,7 +37,7 @@ class SegmentSwap {
     }
 
     /*@  public normal_behaviour
-     @  requires 1 < a.length && a.length < 10 && 0 <= startLow && startHigh+size-1 < a.length &&
+     @  requires 1 < a.length && 0 <= startLow && startHigh+size-1 < a.length &&
      @           0 <= size && startLow+size-1 < startHigh;
      @  ensures (\forall int offset; 0 <= offset && offset < size; 
      @           a[startLow+offset] == \old(a[startHigh+offset]) && 
