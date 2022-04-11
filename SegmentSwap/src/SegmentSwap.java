@@ -1,6 +1,10 @@
 /*
  * Here we make it slightly more difficult to write the loop invariant
  * when compared to the SentinelSearch.java problem.
+ *
+ * Note: This is actually a bad specification as it does not say, as intended, that the 
+ * unswapped segments remain the same. To keep this spec. short we do not care about this issue.
+ *      
  */
 
 class SegmentSwap {
