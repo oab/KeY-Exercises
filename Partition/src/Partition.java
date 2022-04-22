@@ -13,10 +13,10 @@ class  Partition {
 	 @ public normal_behaviour
 	 @ requires true;
 	 @ assignable \strictly_nothing;
-	 @ accessible \inv: \nothing;
-	 @ ensures \result == test(x);
+	 @ accessible \nothing;
+	 @ ensures \result == (x < 5);
 	 @*/
-	boolean /*@ strictly_pure @*/ test(int x);
+	boolean /*@ strictly_pure helper @*/ test(int x);
     }
 	
    /*@
@@ -71,7 +71,7 @@ class  Partition {
 	 @ loop_invariant 0 <= i && i <= in.length && 
 	 @ 0 <= low && low <= in.length && -1 <= high && high < in.length &&
 	 @ i == low + out.length - (high + 1)  &&
-	 @ (\forall int x; 0 <= x && x < i; in[x] == 0 ? (\exists int l; 0 <= l && l < low; in[x] == out[l])
+	 @ (\forall int x; 0 <= x && x < i; in[x] < 5 ? (\exists int l; 0 <= l && l < low; in[x] == out[l])
 	 @                                             : (\exists int h; high < h && h < out.length; in[x] == out[h])) &&
 	 @ (\forall int l; 0 <= l && l < low; out[l] < 5) &&
 	 @ (\forall int h; high < h && h < out.length; !(out[h] < 5));
