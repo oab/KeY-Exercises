@@ -35,8 +35,8 @@ class  Partition {
 	 @ loop_invariant 0 <= i && i <= in.length && 
 	 @ 0 <= low && low <= in.length && -1 <= high && high < in.length &&
 	 @ i == low + out.length - (high + 1)  &&
-	 @ (\forall int x; 0 <= x && x < i; in[x] == 0 ? (\exists int l; 0 <= l && l < low; in[x] == out[l])
-	 @                                             : (\exists int h; high < h && h < out.length; in[x] == out[h])) &&
+	 @ (\forall int x; 0 <= x && x < i; p.test(in[x]) ? (\exists int l; 0 <= l && l < low; in[x] == out[l])
+	 @                                                : (\exists int h; high < h && h < out.length; in[x] == out[h])) &&
 	 @ (\forall int l; 0 <= l && l < low; p.test(out[l])) &&
 	 @ (\forall int h; high < h && h < out.length; !p.test(out[h]));
 	 @ assignable out[*];
