@@ -1,5 +1,8 @@
-// Partition with passed predicate hard to close all goals on
-// the other one with an inlined concrete predicate is manageable
+// partition1 with passed predicate hard to close all goals on
+// partition2 one with an inlined concrete predicate is manageable
+// FIXME: it is silly to require in.length == out.length
+
+// partition3 not done yet
 
 //  [...,T,T,T,low,?, ... ,?, high,F,F,F,...]
 //  low == #T, out.length - (high+1) == #F
@@ -90,6 +93,30 @@ class  Partition {
 	return low;
 
     }
+
+    // TODO: An in-place partition, currently just quickly tested and implemented, might be buggy
+    static int partition3(final int[] in, final Partition.Predicate p) {
+	int low = 0;
+	int high = in.length-1;
+
+  	while(low < high) {
+	    while(p.test(in[low]) && low <= in.length) low++;
+	    while(!p.test(in[high]) && -1 <= high) high--;
+	    if(low < high) {
+		int temp = in[low];
+		in[low] = in[high];
+		in[high] = temp;
+		low++;
+		high--;
+	    }
+
+		
+	}
+	
+	return low;
+
+    }
+
 
     
 }
