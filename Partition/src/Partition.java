@@ -119,14 +119,14 @@ class  Partition {
   	while(low < high) {
 	    
             /*@ ensures low == in.length || !p.test(in[low]);
-	      @ singals_only \nothing;
+	      @ signals_only \nothing;
 	      @*/
 	    {
 	      while(low < in.length && p.test(in[low])) low++;
 	    }
 	    
             /*@ ensures high == -1 || p.test(in[high]);
-              @ singals_only \nothing;
+              @ signals_only \nothing;
 	      @*/
 	    {
 	      while(0 < high && !p.test(in[high])) high--;
