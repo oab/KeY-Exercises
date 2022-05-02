@@ -118,40 +118,33 @@ class  Partition {
 	 @*/
   	while(low < high) {
 	    
-	    /*@ 
-	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	      @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
-	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
-	      @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
-	      @ assignable in[*];
-	      @                                               
-	      @ decreases high - low;
+            /*@ ensures low == in.length || !p.test(in[low]);
+	      @ singals_only \nothing;
 	      @*/
-	    while(low < in.length && p.test(in[low])) low++;
-
+	    {
+	      while(low < in.length && p.test(in[low])) low++;
+	    }
 	    
-	    /*@ 
-	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	      @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
-	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
-	      @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
-	      @ assignable in[*];
-	      @                                               
-	      @ decreases high - low;
+            /*@ ensures high == -1 || p.test(in[high]);
+              @ singals_only \nothing;
 	      @*/
-	    while(0 < high && !p.test(in[high])) high--;
+	    {
+	      while(0 < high && !p.test(in[high])) high--;
+	    }
 
 
 	    if(low < high) {
-		int temp = in[low];
-		in[low] = in[high];
-		in[high] = temp;
-		low++;
-		high--;
+		/*@
+		  @ ensures in[low] == \old(in[high]) && in[high] == \old(in[low]);
+		  @ signals_only \nothing;
+		  @*/
+		{
+		    int temp = in[low];
+		    in[low] = in[high];
+		    in[high] = temp;
+		    low++;
+		    high--;
+		}
 	    }
 
 		
