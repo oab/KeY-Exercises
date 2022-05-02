@@ -107,7 +107,7 @@ class  Partition {
 
        /*@ 
 	 @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	 @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	 @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
 	 @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
          @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	 @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
@@ -117,10 +117,10 @@ class  Partition {
 	 @ decreases high - low;
 	 @*/
   	while(low < high) {
-
+	    
 	    /*@ 
 	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	      @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	      @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
 	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
@@ -131,9 +131,10 @@ class  Partition {
 	      @*/
 	    while(low < in.length && p.test(in[low])) low++;
 
+	    
 	    /*@ 
 	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	      @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	      @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
 	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
