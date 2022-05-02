@@ -94,14 +94,57 @@ class  Partition {
 
     }
 
-    // TODO: An in-place partition, currently just quickly tested and implemented, might be buggy
+   /*@
+     @ public normal_behaviour
+     @ requires \invariant_for(p);
+     @ ensures (\forall int i; 0 <= i && i < in.length; (\exists int j; 0 <= j && j < in.length; in[i] == \old(in[j]) )) &&
+     @         (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]) );
+     @ assignable in[*];
+     @*/
     static int partition3(final int[] in, final Partition.Predicate p) {
 	int low = 0;
 	int high = in.length-1;
 
+       /*@ 
+	 @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
+	 @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	 @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+         @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+	 @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
+	 @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
+	 @ assignable in[*];
+	 @                                               
+	 @ decreases high - low;
+	 @*/
   	while(low < high) {
+
+	    /*@ 
+	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
+	      @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
+	      @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
+	      @ assignable in[*];
+	      @                                               
+	      @ decreases high - low;
+	      @*/
 	    while(p.test(in[low]) && low <= in.length) low++;
+
+	    	    /*@ 
+	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
+	      @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
+	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+	      @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
+	      @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
+	      @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
+	      @ assignable in[*];
+	      @                                               
+	      @ decreases high - low;
+	      @*/
 	    while(!p.test(in[high]) && -1 <= high) high--;
+
+
 	    if(low < high) {
 		int temp = in[low];
 		in[low] = in[high];
