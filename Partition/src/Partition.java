@@ -129,9 +129,9 @@ class  Partition {
 	      @                                               
 	      @ decreases high - low;
 	      @*/
-	    while(p.test(in[low]) && low <= in.length) low++;
+	    while(low < in.length && p.test(in[low])) low++;
 
-	    	    /*@ 
+	    /*@ 
 	      @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
 	      @ (low < high ==> (\forall int x; low <= x && x <= high; in[x] == \old(in[x]))) &&
 	      @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
@@ -142,7 +142,7 @@ class  Partition {
 	      @                                               
 	      @ decreases high - low;
 	      @*/
-	    while(!p.test(in[high]) && -1 <= high) high--;
+	    while(0 < high && !p.test(in[high])) high--;
 
 
 	    if(low < high) {
