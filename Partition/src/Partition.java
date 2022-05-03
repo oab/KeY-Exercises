@@ -107,7 +107,7 @@ class  Partition {
 
        /*@ 
 	 @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	 @ (low < high ==> (\forall int x; low < x && x < high; in[x] == \old(in[x]))) &&
+	 @ (\forall int x; low < x && x < high; in[x] == \old(in[x])) &&
 	 @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
          @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
 	 @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
@@ -135,8 +135,9 @@ class  Partition {
 
 	    if(low < high) {
 		/*@
-		  @ ensures in[low] == \old(in[high]) && in[high] == \old(in[low]);
+		  @ ensures in[\old(low)] == \old(in[\old(high)]) && in[\old(high)] == \old(in[\old(low)]);
 		  @ signals_only \nothing;
+		  @
 		  @*/
 		{
 		    int temp = in[low];
