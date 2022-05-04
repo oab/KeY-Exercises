@@ -97,56 +97,50 @@ class  Partition {
    /*@
      @ public normal_behaviour
      @ requires \invariant_for(p);
-     @ ensures (\forall int i; 0 <= i && i < in.length; (\exists int j; 0 <= j && j < in.length; in[i] == \old(in[j]) )) &&
+     @ ensures (\dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)))) &&
      @         (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]) );
      @ assignable in[*];
      @*/
     static int partition3(final int[] in, final Partition.Predicate p) {
+	  
+
 	int low = 0;
 	int high = in.length-1;
 
        /*@ 
-	 @ loop_invariant  0 <= low && low <= in.length && -1 <= high && high < in.length &&
-	 @ (\forall int x; low < x && x < high; in[x] == \old(in[x])) &&
-	 @ (\forall int x; 0 <= x && x < low; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-         @ (\forall int x; high < x && x < in.length; (\exists int i; 0 <= i && i < in.length; in[x] == \old(in[i]))) &&
-	 @ (\forall int l; 0 <= l && l < low; p.test(in[l])) &&
-	 @ (\forall int h; high < h && h < in.length; !p.test(in[h]));
-	 @ assignable in[*];
-	 @                                               
-	 @ decreases high - low;
+	 @ loop_invariant 0 <= low && low <= in.length && -1 <= high && high < in.length &&
+         @ \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)));
+	 @ //(\forall int l; 0 <= l && l < low; p.test(in[l]))
+	 @ //(\forall int h; high < h && h < in.length; !p.test(in[h]))
+	 @ assignable in[low], in[high];
+	 @ 
+	 @ decreases high - low + 1;
 	 @*/
   	while(low < high) {
-	    
-            /*@ ensures low == in.length || !p.test(in[low]);
-	      @ signals_only \nothing;
-	      @*/
-	    {
-	      while(low < in.length && p.test(in[low])) low++;
-	    }
-	    
-            /*@ ensures high == -1 || p.test(in[high]);
-              @ signals_only \nothing;
-	      @*/
-	    {
-	      while(0 < high && !p.test(in[high])) high--;
-	    }
 
 
-	    if(low < high) {
-		/*@
-		  @ ensures in[\old(low)] == \old(in[\old(high)]) && in[\old(high)] == \old(in[\old(low)]);
-		  @ signals_only \nothing;
-		  @
-		  @*/
-		{
-		    int temp = in[low];
-		    in[low] = in[high];
-		    in[high] = temp;
-		    low++;
-		    high--;
-		}
-	    }
+	    /*@ 
+              @ loop_invariant (0 <= low && low <= in.length);
+              @ decreases high - low + 1; 
+	      @ assignable low;
+	      @*/
+ 	      while(low < in.length && p.test(in[low])) low++;
+
+	    /*@ 
+              @ loop_invariant -1 <= high && high < in.length;
+              @ decreases high - low + 1;
+	      @ assignable high;
+	      @*/
+	      while(0 <= high && !p.test(in[high])) high--;
+
+
+	      if(low < high) {	    
+		  int temp = in[low];
+		  in[low] = in[high];
+		  in[high] = temp;
+		  low++;
+		  high--;
+	      }
 
 		
 	}
