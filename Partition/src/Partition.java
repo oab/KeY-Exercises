@@ -94,11 +94,15 @@ class  Partition {
 
     }
 
+
+     //(\forall int l; 0 <= l && l < low; p.test(in[l]))
+     //(\forall int h; high < h && h < in.length; !p.test(in[h]))
+     //(\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]) );
+    
    /*@
      @ public normal_behaviour
      @ requires \invariant_for(p);
-     @ ensures (\dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)))) &&
-     @         (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]) );
+     @ ensures \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)));
      @ assignable in[*];
      @*/
     static int partition3(final int[] in, final Partition.Predicate p) {
@@ -109,10 +113,10 @@ class  Partition {
 
        /*@ 
 	 @ loop_invariant 0 <= low && low <= in.length && -1 <= high && high < in.length &&
-         @ \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)));
-	 @ //(\forall int l; 0 <= l && l < low; p.test(in[l]))
-	 @ //(\forall int h; high < h && h < in.length; !p.test(in[h]))
-	 @ assignable in[low], in[high];
+         @ \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in))) &&
+         @ (\forall int i; high < i && i< in.length; !p.test(in[i])) &&
+         @ (\forall int i; 0 <= i && i < low ; p.test(in[i]));
+	 @ assignable in[low..high];
 	 @ 
 	 @ decreases high - low + 1;
 	 @*/
@@ -120,26 +124,31 @@ class  Partition {
 
 
 	    /*@ 
-              @ loop_invariant (0 <= low && low <= in.length);
-              @ decreases high - low + 1; 
+              @ loop_invariant low <= in.length && 
+	      @ (\forall int i; high < i && i< in.length; !p.test(in[i])) &&
+	      @ (\forall int i; 0 <= i && i < low ; p.test(in[i]));
+              @ decreases in.length - low;
 	      @ assignable low;
 	      @*/
  	      while(low < in.length && p.test(in[low])) low++;
 
 	    /*@ 
-              @ loop_invariant -1 <= high && high < in.length;
-              @ decreases high - low + 1;
+              @ loop_invariant -1 <= high &&
+	      @ (\forall int i; high < i && i< in.length; !p.test(in[i])) &&
+	      @ (\forall int i; 0 <= i && i < low ; p.test(in[i]));
+              @ decreases high;
 	      @ assignable high;
 	      @*/
 	      while(0 <= high && !p.test(in[high])) high--;
 
-
-	      if(low < high) {	    
+	      
+	      if(low < high) {
 		  int temp = in[low];
 		  in[low] = in[high];
 		  in[high] = temp;
 		  low++;
 		  high--;
+		  
 	      }
 
 		
