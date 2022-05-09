@@ -8,9 +8,8 @@
 //  low == #T, out.length - (high+1) == #F
 //  i == low + out.length - (high+1)
 //
-class  Partition {
 
-    public interface Predicate {
+ public interface Predicate {
 
        /*@
 	 @ public normal_behaviour
@@ -20,7 +19,12 @@ class  Partition {
 	 @ ensures \result == (x < 5);
 	 @*/
 	boolean /*@ strictly_pure helper @*/ test(int x);
-    }
+
+}
+
+class  Partition {
+
+   
 	
    /*@
      @ public normal_behaviour
@@ -29,7 +33,7 @@ class  Partition {
      @         (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(out[i]) : !p.test(out[i]) );
      @ assignable out[*];
      @*/
-    static int partition1(final int[] in, int[] out, final Partition.Predicate p) {
+    static int partition1(final int[] in, int[] out, final Predicate p) {
 	int i = 0;
 	int low  = 0;
 	int high = in.length-1;
@@ -98,47 +102,49 @@ class  Partition {
      @ public normal_behaviour
      @ requires \invariant_for(p);
      @ ensures \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in))) &&
-     @ (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]) );
+     @           (\forall int i; 0 <= i && i < in.length; i < \result ? p.test(in[i]) : !p.test(in[i]));
      @ assignable in[*];
      @*/
-    static int partition3(final int[] in, final Partition.Predicate p) {
+    static int partition3(final int[] in, final Predicate p) {
 	  
 
 	int low = 0;
 	int high = in.length-1;
-
-	//@ ghost int select_low  = 0;
-	//@ ghost int select_high = in.length-1;
+	/*
+	 * The following changes were made to make this easier to prove
+	 * 1. Condition in first while loop changed from low < high to low <= high
+	 *    this may be done as it will never be the case that low == high at this point.
+	 *    prior or after the two next changes
+	 * 2. Condition in second while loop changed from low < in.length
+	 *    to low <= high ; high still bounds in array as it is decreasing and 
+	 *    swaps occur only between a low position and a below high position (pred doesn't hold for those above)
+	 * 3. Condition in third while loop changed from -1 <= high 
+	 *    to low <= high ; low still bounds in array as it is increasing
+	 *    swaps occur only between a high position and an above low position (pred holds for those below)
+	 */
 
        /*@ 
 	 @ loop_invariant  
-	 @ \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in))) && 
          @ 0 <= low && low <= in.length && -1 <= high && high < in.length && low <= high+1 &&
-         @ (\forall int i; 0 <= i && i < select_low ; in[i] == \old(in[i]) ) &&
-	 @ (\forall int i; select_high < i && i< in.length; in[i] == \old(in[i]) ) &&
-         @ (\forall int i; select_low < i && i< select_high; in[i] == \old(in[i]) ) &&
-	 @ (low != select_low && high != select_high ==> in[select_low] == \old(in[select_high]) && 
-	 @                                               in[select_high] == \old(in[select_low])) &&
-	 @ (low == select_low && high == select_high ==> in[select_low] == \old(in[select_low]) && 
-	 @                                               in[select_high] == \old(in[select_high])) &&
-	 @
          @
          @ (\forall int i; 0 <= i && i < low ; p.test(in[i])) &&
-         @ (\forall int i; high < i && i< in.length; !p.test(in[i]));
-         @ 
-	 @ assignable in[low..high];
+         @ (\forall int i; high < i && i< in.length; !p.test(in[i])) &&
+	 @ \dl_seqPerm(\dl_array2seq(in), \old(\dl_array2seq(in)));
+	 @
+	 @ assignable in[*];
+	 @
 	 @ 
 	 @ decreases high - low + 1;
 	 @*/
-  	while(low < high) {
+  	while(low <= high) {
 
 	    /*@ 
               @ loop_invariant 0 <= low && low <= in.length && low <= high+1 &&
 	      @ (\forall int i; 0 <= i && i < low ; p.test(in[i]));
-              @ decreases low;
+              @ decreases in.length + 1 - low;
 	      @ assignable low;
 	      @*/
-	    while(low < in.length && p.test(in[low])) low++;
+	    while(low <= high && p.test(in[low])) low++;
 
 	    /*@ 
               @ loop_invariant -1 <= high && high < in.length && low <= high+1 &&
@@ -146,10 +152,8 @@ class  Partition {
               @ decreases high + 1;
 	      @ assignable high;
 	      @*/
-	    while(0 <= high && !p.test(in[high])) high--;
+	    while(low <= high && !p.test(in[high])) high--;
 	      
-	      //@ set select_low  = low;
-	      //@ set select_high = high;
 	      if(low < high) {
 		  int temp = in[low];
 		  in[low] = in[high];
