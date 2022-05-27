@@ -1,5 +1,12 @@
-macro autopilot-prep;
+macro autopilot;
+
+select branch="Normal Execution (_in != null)";
 
 macro simp-upd;
 
-tryclose;
+macro autopilot;
+
+macro simp-heap;
+
+macro tryclose;
+
