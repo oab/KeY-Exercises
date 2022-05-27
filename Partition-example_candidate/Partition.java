@@ -4,16 +4,13 @@
  * will permute the array and return an integer indicating that the predicate holds
  * for any value at any valid index below this integer and the opposite for any
  * value at any valid index above this integer.
- *  
  * 
+ * The proof requires manual interaction exactly as the example given in
+ * page 564 of the KeY book. 
  * 
  * @author Ole Jørgen Abusdal
  */
 
-//  [...,T,T,T,low,?, ... ,?, high,F,F,F,...]
-//  low == #T, out.length - (high+1) == #F
-//  i == low + out.length - (high+1)
-//
 
 
 public interface Predicate {
