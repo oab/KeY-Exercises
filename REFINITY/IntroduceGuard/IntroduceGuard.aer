@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:aeRelationalModel xmlns:ns2="http://www.key-project.org/abstractexecution" preCondition="" postCondition="\result_1==\result_2">
+    <programOne>if(/*@ assignable frameE;
+  @ accessible footprintE;
+  @ exceptional_behavior requires false;
+  @*/
+\abstract_expression boolean e) {
+    /*@ assignable frameA;
+      @ accessible footprintA;
+      @ exceptional_behavior requires false;
+      @ return_behavior requires false;
+      @ break_behavior requires false;
+      @ continue_behavior requires false;
+      @*/
+    \abstract_statement A;
+} else {
+    /*@ assignable frameB;
+      @ accessible footprintB;
+      @ exceptional_behavior requires false;
+      @ return_behavior requires false;
+      @ break_behavior requires false;
+      @ continue_behavior requires false;
+      @*/
+    \abstract_statement B;
+}
+</programOne>
+    <programTwo>if(!(/*@ assignable frameE;
+  @ accessible footprintE;
+  @ exceptional_behavior requires false;
+  @*/
+\abstract_expression boolean e)) {
+    /*@ assignable frameB;
+      @ accessible footprintB;
+      @ exceptional_behavior requires false;
+      @ return_behavior requires false;
+      @ break_behavior requires false;
+      @ continue_behavior requires false;
+      @*/
+    \abstract_statement B;
+    return null;
+}
+
+/*@ assignable frameA;
+  @ accessible footprintA;
+  @ exceptional_behavior requires false;
+  @ return_behavior requires false;
+  @ break_behavior requires false;
+  @ continue_behavior requires false;
+  @*/
+\abstract_statement A;
+
+</programTwo>
+    <methodLevelContext></methodLevelContext>
+    <locationSets>
+        <locationSet funcName="relevant">
+            <relevantOne>0</relevantOne>
+            <relevantTwo>0</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="frameE">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="footprintE">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="frameA">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="footprintA">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="frameB">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+        <locationSet funcName="footprintB">
+            <relevantOne>-1</relevantOne>
+            <relevantTwo>-1</relevantTwo>
+            <resultSortName>LocSet</resultSortName>
+        </locationSet>
+    </locationSets>
+    <functions/>
+    <predicates/>
+    <programVariables/>
+</ns2:aeRelationalModel>
