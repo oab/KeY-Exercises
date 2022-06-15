@@ -1,9 +1,16 @@
 class Matrix {
-    /* | 1  2  3|       | 22  28|
+    /*
+     * As example we use the matrix product MN = MK*KN
+     * seen below. We hope to prove two alg. for computing
+     * it as equivalent with KeY. 
+     *
+     * | 1  2  3|       | 22  28|
      * | 4  5  6||1 2|  | 49  64|
      * | 7  8  9||3 4| =| 76 100|
      * |10 11 12||5 6|  |103 136|
-     * |13 14 15|       |130 172| 
+     * |13 14 15|       |130 172|
+     *
+     * Can we prove alg. equivalent for arbitrary M,N and K ? 
      */
     
     final static int M = 5;
@@ -22,6 +29,10 @@ class Matrix {
     }
 
     // We imagine someone wrote this
+    /*@
+      @ public normal_behavior
+      @ assignable \nothing;
+      @*/
     public static int[] mul1(int[] a, int[] b) {
 
 	int[] out = new int[M*N];
@@ -46,6 +57,10 @@ class Matrix {
     }
 
     // Then another implemenation is given (e.g. derived from MoA)
+    /*@
+      @ public normal_behavior
+      @ assignable \nothing;
+      @*/
     public static int[] mul2(int[] a, int[] b) {
 	int[] out = new int[M*N];
 	for(int i=0;i<M;i++) {
@@ -59,8 +74,8 @@ class Matrix {
     }
 
     // A concrete proof obligation
-    /*@ public behavior
-      @ ensures \result;
+    /*@ public normal_behavior
+      @ ensures \result == true;
       @ assignable \strictly_nothing;
       @
       @ model boolean mul1_eq_mul2() {
@@ -69,6 +84,19 @@ class Matrix {
       @           mul1(A,B)[i] == mul2(A,B)[i] );
       @ }
       @*/
+
+
+    /*@
+      @ public normal_behavior
+      @ ensures \result == true;
+      @*/
+    public static boolean check() {
+	boolean check = false;
+	int[] left  = mul1(A,B);
+	int[] right = mul2(A,B);
+	for(int i=0;i<MN;i++) check = check && left[i] == right[i];
+	return check;
+    }
 
     // might there be a way to do this for arbitrary arguments?
    
