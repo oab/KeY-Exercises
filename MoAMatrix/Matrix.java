@@ -32,6 +32,7 @@ class Matrix {
     /*@
       @ public normal_behavior
       @ assignable \nothing;
+      @ diverges true;
       @*/
     public static int[] mul1(int[] a, int[] b) {
 
@@ -60,9 +61,11 @@ class Matrix {
     /*@
       @ public normal_behavior
       @ assignable \nothing;
+      @ diverges true;
       @*/
     public static int[] mul2(int[] a, int[] b) {
 	int[] out = new int[M*N];
+
 	for(int i=0;i<M;i++) {
 	    for(int j=0;j<N;j++) {
 		for(int k=0;k<K;k++) {
@@ -91,9 +94,9 @@ class Matrix {
       @ ensures \result == true;
       @*/
     public static boolean check() {
-	boolean check = false;
-	int[] left  = mul1(A,B);
-	int[] right = mul2(A,B);
+	boolean check = true;
+	int[] left  = mul2(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},new int[]{1,2,3,4,5,6});
+	int[] right = mul2(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},new int[]{1,2,3,4,5,6});
 	for(int i=0;i<MN;i++) check = check && left[i] == right[i];
 	return check;
     }
