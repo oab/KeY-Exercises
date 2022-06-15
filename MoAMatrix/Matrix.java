@@ -59,11 +59,18 @@ class Matrix {
     }
 
     // A concrete proof obligation
-    /*@
-      @ model boolean eq_concrete() {
-      @   return (\forall int i; 0 <= i && i < MN; mul1(A,B) == mul2(A,B));
+    /*@ public behavior
+      @ ensures \result;
+      @ assignable \strictly_nothing;
+      @
+      @ model boolean mul1_eq_mul2() {
+      @   return (\forall int i; 
+      @           0 <= i && i < MN; 
+      @           mul1(A,B)[i] == mul2(A,B)[i] );
       @ }
       @*/
+
+    // might there be a way to do this for arbitrary arguments?
    
 
 }
