@@ -65,8 +65,8 @@ class Bijection {
      * The specification I used once to check for bijections is
      * given a bijective function f_(shape): indices(shape) -> iota(product(shape))
      *
-     * The row_major given above can be regarded as implementing all f_(shape)
-     * such that ordering given is row_major.
+     * The row_major_layout given above can be regarded as implementing all f_(shape)
+     * such that ordering given is row major.
      *
      * 
      */
