@@ -92,11 +92,12 @@ class Matrix {
     /*@
       @ public normal_behavior
       @ ensures \result == true;
+      @ diverges true;
       @*/
     public static boolean check() {
 	boolean check = true;
-	int[] left  = mul2(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},new int[]{1,2,3,4,5,6});
-	int[] right = mul2(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},new int[]{1,2,3,4,5,6});
+	int[] left  = mul1(A,B);
+	int[] right = mul2(A,B);
 	for(int i=0;i<MN;i++) check = check && left[i] == right[i];
 	return check;
     }
