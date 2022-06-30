@@ -67,9 +67,9 @@ class Matrix {
       @*/
     public static boolean check(int a[],int b[], int M, int N, int K) {
 	boolean check = true;
-	int[] left  = mul1(A,B);
-	int[] right = mul2(A,B);
-	for(int i=0;i<MN;i++) check = check && left[i] == right[i];
+	int[] left  = mul1(a,b,M,N,K);
+	int[] right = mul2(a,b,M,N,K);
+	for(int i=0;i<(M*N);i++) check = check && left[i] == right[i];
 	return check;
     }
 
