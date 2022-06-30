@@ -31,6 +31,8 @@ class Matrix {
     // We imagine someone wrote this
     /*@
       @ public normal_behavior
+      @ requires a.length == M*K && b.length == K*N;
+      @ ensures \result.length == M*N;
       @ assignable \nothing;
       @ diverges true;
       @*/
@@ -60,6 +62,8 @@ class Matrix {
     // Then another implemenation is given (e.g. derived from MoA)
     /*@
       @ public normal_behavior
+      @ requires a.length == M*K && b.length == K*N;
+      @ ensures \result.length == M*N;
       @ assignable \nothing;
       @ diverges true;
       @*/
@@ -75,19 +79,6 @@ class Matrix {
 	}
 	return out;
     }
-
-    // A concrete proof obligation
-    /*@ public normal_behavior
-      @ ensures \result == true;
-      @ assignable \strictly_nothing;
-      @
-      @ model boolean mul1_eq_mul2() {
-      @   return (\forall int i; 
-      @           0 <= i && i < MN; 
-      @           mul1(A,B)[i] == mul2(A,B)[i] );
-      @ }
-      @*/
-
 
     /*@
       @ public normal_behavior

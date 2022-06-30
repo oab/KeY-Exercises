@@ -9,6 +9,8 @@ class Matrix {
     // We imagine someone wrote this
     /*@
       @ public normal_behavior
+      @ requires a.length == M*K && b.length == K*N;
+      @ ensures \result.length == M*N;
       @ assignable \nothing;
       @ diverges true;
       @*/
@@ -40,6 +42,8 @@ class Matrix {
     // Then another implemenation is given (e.g. derived from MoA)
     /*@
       @ public normal_behavior
+      @ requires a.length == M*K && b.length == K*N;
+      @ ensures \result.length == M*N;
       @ assignable \nothing;
       @ diverges true;
       @*/
@@ -61,8 +65,8 @@ class Matrix {
 
     /*@
       @ public normal_behavior
-      @ ensures \result == true;
       @ requires a.length == M*K && b.length == K*N; 
+      @ ensures \result == true;
       @ diverges true;
       @*/
     public static boolean check(int a[],int b[], int M, int N, int K) {
