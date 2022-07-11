@@ -36,9 +36,32 @@ public final class Elements {
     protected int findRoot(final int i) {
 	int e = i;
 	int old = i;
-	while((e = getParent(e)) != old) old = e;
+	while((e = getParent(e)) != old) {
+	    old = e;
+	}
+
 	return e;
     }
+
+    protected int findRootAndCompress(final int i) {
+	int e = i;
+	int old = i;
+	while((e = getParent(e)) != old) {
+	    setParent(old,-1);
+	    old = e;
+	}
+
+	int esize = getSize(e);
+	for(int j=0;j<size;j++) {
+	    if(getParent(j) < 0) {
+		setParent(j,e);
+		setSize(j,esize);
+	    }
+
+	}
+	return e;
+    }
+
 
     protected void union(final int i,final int j) {
 	

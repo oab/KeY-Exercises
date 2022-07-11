@@ -29,7 +29,7 @@ public class Set {
 	    if(current == elements.getSize()) break;
 	    
 	    seen[current] = true;
-	    int picked = elements.findRoot(current); //elements[current].findRoot().getName();
+	    int picked = elements.findRoot(current);
 	    semisorted[free++] = current;
 	    for(int i=current;i<elements.getSize();i++) {
 		if(seen[i]) continue;
@@ -54,7 +54,7 @@ public class Set {
 	StringBuilder s = new StringBuilder();
 	int i = 0;
 	while(i<sets.length) {
-	    int size = elements.getSize(elements.findRoot(sets[i])); //elements[sets[i]].findRoot().getSize();
+	    int size = elements.getSize(elements.findRoot(sets[i]));
 	    s.append('{');
 	    while(0 < size) {
 		size--;
