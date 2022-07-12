@@ -5,7 +5,6 @@ public interface Cycle {
     //@ public model instance \seq cycle;
     //@ public accessible cycle: footprint;
     
-    //@ public instance invariant size() == cycle.length;
     //@ public instance invariant size() >= 1;
     
     //@ public accessible \inv: footprint;
