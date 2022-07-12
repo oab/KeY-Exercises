@@ -44,8 +44,5 @@ public interface Cycle {
       @*/
     public /*@ pure @*/ int value();
 
-
-    // 1. replicate List Client example (prove modification of list a does not affect list b)
-    // 2. extract cycle to list, use model field for representation
-
+ 
 }
