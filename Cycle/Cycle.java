@@ -12,22 +12,22 @@ public interface Cycle {
  
     
     /*@ public normal_behavior
-      @ ensures cycle == (size() == 1 ? \old(cycle)
-      @                               : \seq_concat(\old(cycle[1..(size()-1)]),\old(cycle[0..0])));
+      @ ensures cycle == \old(cycle);
+      @ ensures \result.cycle == \seq_concat( \old(cycle[1..\old(size())]), \old(cycle[0..1]) );
       @ assignable footprint;
       @*/
     public Cycle /*@ pure @*/ next();
     
     /*@ public normal_behavior
-      @ ensures cycle == ( \old(size()) == 1 ? \seq_concat( \seq_singleton(value), \old(cycle[0..0]) )
-      @                                      : \seq_concat( \seq_concat(\old(cycle[0..0]),\seq_singleton(value) ), \old(cycle[1..(\old(size())-1)]) ) ); 
+      @ ensures cycle == \seq_concat( \seq_concat(\old(cycle[0..1]), \seq_singleton(value) ), \old(cycle[1..\old(size())])); 
+      @ ensures \result.cycle == \seq_concat( \seq_concat(\seq_singleton(value), \old(cycle[1..\old(size())])), \old(cycle[0..1]) );
       @ ensures \new_elems_fresh(footprint);
       @ assignable footprint;
       @*/
     public Cycle add(int value);
 
     /*@ public normal_behavior
-      @ ensures cycle == ( (\old(size()) == 1) ? cycle : (cycle[1..(\old(size())-1)]) );
+      @ ensures cycle == ( (\old(size()) == 1) ? cycle : (cycle[1..\old(size())]) );
       @ assignable footprint;
       @*/
     public Cycle remove();
@@ -39,7 +39,7 @@ public interface Cycle {
     public /*@ pure @*/ int size();
 
     /*@ public normal_behavior
-      @ ensures \result == (int)(cycle[0]);
+      @ ensures \result == cycle[0];
       @ accessible footprint;
       @*/
     public /*@ pure @*/ int value();
