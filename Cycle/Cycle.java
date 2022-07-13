@@ -40,7 +40,7 @@ public interface Cycle {
       @ ensures cycle == \old(cycle[1..cycle.length]);
       @ assignable footprint;
       @*/
-    public void remove();
+    public Cycle remove();
 
     /*@ public normal_behavior
       @ ensures \result == cycle.length;
