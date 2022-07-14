@@ -20,19 +20,6 @@ class Client {
 
     
     /*@ normal_behavior
-      @ requires \invariant_for(singleton);
-      @ requires \disjoint(singleton.footprint, a.footprint);
-      @ requires \disjoint(singleton.footprint, b.footprint);
-      @ requires \disjoint(singleton.footprint, this.*);
-      @ requires singleton.size() == 1;
-      @ requires singleton.value() == 0;
-      @ ensures true ;
-      @*/
-    void nSimple(Cycle singleton) {
-	singleton.add(1);
-    }
-
-    /*@ normal_behavior
       @ requires a != b;
       @ requires \disjoint(a.footprint, b.footprint);
       @ ensures b.size() == \old(b.size());
