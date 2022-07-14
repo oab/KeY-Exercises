@@ -13,33 +13,30 @@ public class ArrayCycle implements Cycle {
 	this.start = (left.start+1)%left.size();
     }
 
-    @Override
     public ArrayCycle next() {
 	return new ArrayCycle(this);
     }
 
-    @Override
     public Cycle add(int value) {
 	items.insert(start+1,value);
 	return this.next();
     }
 
-    @Override
     public Cycle remove() {
 	int value = items.remove(start);
 	return new ArrayCycle(value);
     }
 
-    @Override
     public int size() {
 	return items.size();
     }
 
-    @Override
+
     public int value() {
 	return items.get(start);
     }
 
+    /*
    public String toString() {
 	StringBuilder s = new StringBuilder();
 	s.append("->");
@@ -53,6 +50,7 @@ public class ArrayCycle implements Cycle {
 
 	return s.toString();
     }
+    */
  
     
 

@@ -3,7 +3,9 @@ public class ArrayListInt {
     int used;
 
     private void resize() {
-	this.items = java.util.Arrays.copyOf(items,items.length*2);  
+	int[] newitems = new int[items.length*2];
+	for(int i=0;i<items.length;i++) newitems[i] = items[i];
+	this.items = newitems; 
     }
     
     public ArrayListInt() {
@@ -41,7 +43,7 @@ public class ArrayListInt {
 	
 
     }
-    
+    /*
     public String toString() {
 	StringBuilder s = new StringBuilder();
 	s.append('[');
@@ -53,7 +55,7 @@ public class ArrayListInt {
 	s.append(']');
 	return s.toString();
     }
-    
+    */
 
     
     

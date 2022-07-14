@@ -16,14 +16,14 @@ public class NodeCycle implements Cycle {
 	return next;
     }
 
-    @Override
+ 
     public Cycle add(int value) {
 	NodeCycle added = new NodeCycle(value,this.next);
 	this.next = added;
 	return added;
     }
 
-    @Override
+
     public Cycle remove() {
 	if(this.next == this) return this; 
 	NodeCycle newLeftnext = this.next;
@@ -35,7 +35,6 @@ public class NodeCycle implements Cycle {
 	
     }
 
-    @Override
     public int size() {
 	int size = 1;
 	NodeCycle current= this;
@@ -43,12 +42,11 @@ public class NodeCycle implements Cycle {
 	return size;
     }
 
-    @Override
     public int value() {
 	return this.value;
     }
 
-    @Override
+    /*
     public String toString() {
 	StringBuilder s = new StringBuilder();
 	NodeCycle current = this;
@@ -62,6 +60,7 @@ public class NodeCycle implements Cycle {
 	
 	return s.toString();
     }
+    */
 
     
 

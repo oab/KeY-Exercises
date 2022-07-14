@@ -12,7 +12,7 @@ class Client {
       @ requires \disjoint(singleton.footprint, this.*);
       @ requires singleton.size() == 1;
       @ requires singleton.value() == 0;
-      @ ensures (\forall int i; 0 <= i && i<2; (int)(singleton.cycle[i]) == (int)((\seq_def int x; 0; 2; x)[i])) ;
+      @ ensures singleton.cycle == (\seq_def int x; 0; 2; x) ;
       @*/
     void n(Cycle singleton) {
 	singleton.add(1).add(2);
